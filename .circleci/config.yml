@@ -1,9 +1,4 @@
 version: 2
-node_env: &node_env
-  docker:
-    - image: circleci/node:6.14.3-stretch-browsers
-  environment:
-    CXX: g++-4.8
 
 python_env: &python_env
   docker:
@@ -15,18 +10,6 @@ install_awscli: &install_awscli
     sudo pip install awscli awsebcli --upgrade
     aws --version
     eb --version
-
-install_gplusplus: &install_gplusplus
-  name: "Install g++ 4.8"
-  command: |
-    sudo apt-get update
-    #sudo apt-get install -y software-properties-common
-    #sudo add-apt-repository ppa:ubuntu-toolchain-r/test  -y
-    #sudo apt-get update -y
-    sudo apt-get install g++-4.8  -y
-    node --version
-    npm --version
-    nvm --version
   
 deploy_steps: &deploy_steps
   - checkout
@@ -34,13 +17,29 @@ deploy_steps: &deploy_steps
       at: .
   - run: *install_awscli
   - setup_remote_docker
-  - run: cd consumer && ./deploy/eb-deploy.sh tc-connect2sf DEV $CIRCLE_BUILD_NUM
+  - run: ./deploy.sh $DEPLOY_ENV
 
 jobs:
   build:
-    <<: *node_env
+    machine: true
+    environment:
+      CXX: g++-4.8
     steps:
-      - run: *install_gplusplus
+      - run: 
+          name: Install g++-4.8
+          command: |
+            sudo add-apt-repository ppa:ubuntu-toolchain-r/test  -y
+            sudo apt-get update -y
+            sudo apt-get install g++-4.8  -y
+      - run:
+          name: Install node-5.12.0
+          command: |
+            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | sudo bash
+            nvm install 5.12.0
+            node --version
+            npm --version
+            nvm --version
+
       - checkout
       - restore_cache:
           key: node-modules-{{ checksum "package-lock.json" }}
