@@ -24,7 +24,6 @@ jobs:
     machine: true
     environment:
       CXX: g++-4.8
-      NVM_DIR: "$HOME/.nvm"
     steps:
       - run: 
           name: Install g++-4.8
@@ -49,7 +48,7 @@ jobs:
       - save_cache:
           key: node-modules-{{ checksum "package-lock.json" }}
           paths: 
-            - consumer/node_modules
+            - node_modules
       - run: ls node_modules/*
       - run: npm run lint && npm run build
       - run: npm test
