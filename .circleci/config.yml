@@ -24,6 +24,7 @@ jobs:
     machine: true
     environment:
       CXX: g++-4.8
+      NVM_DIR: "$HOME/.nvm"
     steps:
       - run: 
           name: Install g++-4.8
@@ -35,6 +36,7 @@ jobs:
           name: Install node-5.12.0
           command: |
             curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | sudo bash
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install 5.12.0
             node --version
             npm --version
