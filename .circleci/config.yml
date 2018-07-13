@@ -17,12 +17,12 @@ install_awscli: &install_awscli
 install_gplusplus: &install_gplusplus
   name: "Install g++ 4.8"
   command: |
-    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test  -y
-    - sudo apt-get update -y
-    - sudo apt-get install g++-4.8  -y
-    - node --version
-    - npm --version
-    - nvm --version
+    sudo add-apt-repository ppa:ubuntu-toolchain-r/test  -y
+    sudo apt-get update -y
+    sudo apt-get install g++-4.8  -y
+    node --version
+    npm --version
+    nvm --version
   
 deploy_steps: &deploy_steps
   - checkout
