@@ -14,7 +14,7 @@ install_awscli: &install_awscli
     aws --version
     eb --version
 
-install_g++: &install_g++
+install_gplusplus: &install_gplusplus++
   name: "Install g++ 4.8"
   command: |
     - sudo add-apt-repository ppa:ubuntu-toolchain-r/test  -y
@@ -36,7 +36,7 @@ jobs:
   build:
     <<: *node_env
     steps:
-      - run: *install_g++
+      - run: *install_gplusplus
       - checkout
       - restore_cache:
           key: node-modules-{{ checksum "package-lock.json" }}
