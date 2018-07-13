@@ -37,7 +37,8 @@
     "redux-logger": "2.10.2",
     "sinon": "1.17.7",
     "sinon-chai": "2.12.0",
-    "webpack": "1.15.0"
+    "webpack": "1.15.0",
+    "estraverse": "4.2.0"
   },
   "dependencies": {
     "angucomplete-alt": "2.5.0",
